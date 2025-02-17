@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
+    networks:
+      - network
+    env_file:
+      - .env
+  authorization-server:
+    container_name: authorization-server
+    image: authorization-server
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - network
+    env_file:
+      - .env
+
+networks:
+  network:
+    name: "book_vault_network"

@@ -1,0 +1,9 @@
+.env
+.idea
+
+**/build
+**/gradlew
+**/gradlew.bat
+**/gradle
+**/.gitattributes
+book-vault.iml
