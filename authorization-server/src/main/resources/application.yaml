@@ -11,3 +11,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+client:
+  id: ${CLIENT_ID}
+  secret: ${CLIENT_SECRET}
+  uri:
+    redirect: ${CLIENT_REDIRECT_URI}
+    logout: ${CLIENT_LOGOUT_URI}
