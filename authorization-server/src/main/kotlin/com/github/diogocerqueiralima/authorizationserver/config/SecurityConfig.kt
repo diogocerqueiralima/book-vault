@@ -8,7 +8,6 @@ import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
@@ -37,7 +36,7 @@ class SecurityConfig {
             .exceptionHandling { exceptions ->
                 exceptions
                     .defaultAuthenticationEntryPointFor(
-                        LoginUrlAuthenticationEntryPoint("/login"),
+                        LoginUrlAuthenticationEntryPoint("/auth/login"),
                         MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                     )
             }
@@ -50,9 +49,13 @@ class SecurityConfig {
         http
             .authorizeHttpRequests { authorize ->
                 authorize
+                    .requestMatchers("/css/**", "/img/**", "/auth/**").permitAll()
                     .anyRequest().authenticated()
             }
-            .formLogin(Customizer.withDefaults())
+            .formLogin { login ->
+                login
+                    .loginPage("/auth/login").permitAll()
+            }
             .build()
 
     @Bean

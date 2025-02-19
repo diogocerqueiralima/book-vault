@@ -1,0 +1,18 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:tailwindcss": "npx @tailwindcss/cli  -i src/main/resources/static/css/style.tailwind.css -o src/main/resources/static/css/style.build.tailwind.css --minify",
+    "watch:tailwindcss": "npx @tailwindcss/cli  -i src/main/resources/static/css/style.tailwind.css -o src/main/resources/static/css/style.build.tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.0.7",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.7"
+  }
+}

@@ -13,6 +13,8 @@ data class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    val email: String,
+
     @get:JvmName("username")
     val username: String,
 
@@ -20,7 +22,7 @@ data class User(
     val password: String,
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private val scopes: List<Scope>
+    private val scopes: List<Scope> = emptyList()
 
 ) : UserDetails {
 
