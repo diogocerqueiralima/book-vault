@@ -4,9 +4,6 @@ function onLoad() {
 
     const urlParams = new URLSearchParams(window.location.search);
 
-    console.log("asadasdadsad")
-    console.log(urlParams)
-
     if (urlParams.has("error")) {
         loadAnimation("Username or e-mail are incorrect.");
     }
