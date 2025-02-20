@@ -25,6 +25,9 @@ class UserService(
 
     fun register(email: String, username: String, password: String, confirmPassword: String): User {
 
+        if (username.isBlank())
+            throw InvalidUsernameException()
+
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
         val pattern = Pattern.compile(emailRegex)
 
@@ -35,7 +38,7 @@ class UserService(
             throw PasswordMatchException()
 
         if (!pattern.matcher(email).matches())
-            throw EmailException()
+            throw InvalidEmailException()
 
         val user = userRepository.findByUsernameOrEmail(username, email)
 

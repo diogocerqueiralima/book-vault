@@ -12,7 +12,8 @@ open class RegisterException(
         USER_ALREADY_EXISTS,
         PASSWORD_MATCH,
         INVALID_EMAIL,
-        PASSWORD_LENGTH
+        PASSWORD_LENGTH,
+        INVALID_USERNAME
 
     }
 
@@ -30,7 +31,7 @@ class UserAlreadyExistsException(
 
 ) : RegisterException(Code.USER_ALREADY_EXISTS, message)
 
-class EmailException(
+class InvalidEmailException(
 
     message: String = "Invalid email"
 
@@ -41,3 +42,9 @@ class PasswordLengthException(
     message: String = "Invalid password"
 
 ) : RegisterException(Code.PASSWORD_LENGTH, message)
+
+class InvalidUsernameException(
+
+    message: String = "Invalid username"
+
+) : RegisterException(Code.INVALID_USERNAME, message)

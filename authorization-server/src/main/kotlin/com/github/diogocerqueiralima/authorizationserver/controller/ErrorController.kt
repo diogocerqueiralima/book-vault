@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 class ErrorController {
 
     @ExceptionHandler(RegisterException::class)
-    fun handleRegisterException(e: RegisterException): String =
-        "redirect:/auth/register?error=${e.code}"
+    fun handleRegisterException(e: RegisterException, http: HttpServletRequest): String =
+        "redirect:${http.requestURI}?error=${e.code}"
 
     @ExceptionHandler(UserNotFoundException::class)
     fun handleNotFound(e: Exception, http: HttpServletRequest): String =

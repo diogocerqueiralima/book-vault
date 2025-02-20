@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@theme {
+
+    --success: #149c32;
+    --error: #cf1919;
+
+    --animate-enter: enter 1s forwards;
+    --animate-exit: exit 1s forwards;
+
+    @keyframes enter {
+
+        from {
+            right: -200%;
+            opacity: 0;
+        }
+
+        to {
+            right: 30px;
+            opacity: 1;
+        }
+
+    }
+
+    @keyframes exit {
+
+        from {
+            right: 30px;
+            opacity: 1;
+        }
+
+        to {
+            right: -200%;
+            opacity: 0;
+        }
+
+    }
+
+}

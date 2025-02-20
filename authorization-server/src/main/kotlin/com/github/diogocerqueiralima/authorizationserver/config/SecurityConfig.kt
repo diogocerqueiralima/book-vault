@@ -49,7 +49,7 @@ class SecurityConfig {
         http
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/css/**", "/img/**", "/auth/**").permitAll()
+                    .requestMatchers("/css/**", "/img/**", "/auth/**", "/scripts/**").permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin { login ->

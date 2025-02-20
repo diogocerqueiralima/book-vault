@@ -374,6 +374,10 @@
     --default-mono-font-variation-settings: var(
       --font-mono--font-variation-settings
     );
+    --success: #149c32;
+    --error: #cf1919;
+    --animate-enter: enter 1s forwards;
+    --animate-exit: exit 1s forwards;
   }
 }
 @layer base {
@@ -518,6 +522,15 @@
   }
 }
 @layer utilities {
+  .fixed {
+    position: fixed;
+  }
+  .top-10 {
+    top: calc(var(--spacing) * 10);
+  }
+  .right-10 {
+    right: calc(var(--spacing) * 10);
+  }
   .flex {
     display: flex;
   }
@@ -528,6 +541,14 @@
     width: calc(var(--spacing) * 4);
     height: calc(var(--spacing) * 4);
   }
+  .size-5 {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
+  .size-6 {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
   .h-screen {
     height: 100vh;
   }
@@ -536,6 +557,12 @@
   }
   .min-w-1\/5 {
     min-width: calc(1/5 * 100%);
+  }
+  .animate-enter {
+    animation: var(--animate-enter);
+  }
+  .animate-exit {
+    animation: var(--animate-exit);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -571,6 +598,9 @@
   .border-gray-600 {
     border-color: var(--color-gray-600);
   }
+  .bg-\(--error\) {
+    background-color: var(--error);
+  }
   .bg-blue-500 {
     background-color: var(--color-blue-500);
   }
@@ -589,8 +619,14 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .px-5 {
+    padding-inline: calc(var(--spacing) * 5);
+  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .py-5 {
+    padding-block: calc(var(--spacing) * 5);
   }
   .text-center {
     text-align: center;
@@ -610,6 +646,9 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .text-\(--primary\) {
+    color: var(--primary);
+  }
   .text-amber-50 {
     color: var(--color-amber-50);
   }
@@ -624,6 +663,9 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .opacity-0 {
+    opacity: 0%;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter;
@@ -681,6 +723,26 @@
   50% {
     transform: none;
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+@keyframes enter {
+  from {
+    right: -200%;
+    opacity: 0;
+  }
+  to {
+    right: 30px;
+    opacity: 1;
+  }
+}
+@keyframes exit {
+  from {
+    right: 30px;
+    opacity: 1;
+  }
+  to {
+    right: -200%;
+    opacity: 0;
   }
 }
 @property --tw-border-style {
