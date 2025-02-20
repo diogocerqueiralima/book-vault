@@ -22,11 +22,21 @@ services:
       - "15672:15672"
     networks:
       - network
+  email-service:
+    container_name: email-service
+    image: email-service
+    networks:
+      - network
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
   authorization-server:
     container_name: authorization-server
     image: authorization-server
     depends_on:
       - postgres
+      - rabbitmq
     ports:
       - "8080:8080"
     networks:
