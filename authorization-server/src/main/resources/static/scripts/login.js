@@ -18,7 +18,7 @@ function onLoad() {
         const username = document.getElementById("username").value
         const password = document.getElementById("password").value;
 
-        if (username.trim().length < 8) {
+        if (username.trim().length === 0) {
             event.preventDefault()
             loadAnimation("Invalid username.")
             return
