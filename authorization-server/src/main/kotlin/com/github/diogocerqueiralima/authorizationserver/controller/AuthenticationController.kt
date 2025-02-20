@@ -1,5 +1,6 @@
 package com.github.diogocerqueiralima.authorizationserver.controller
 
+import com.github.diogocerqueiralima.authorizationserver.dto.UserForgotPasswordDto
 import com.github.diogocerqueiralima.authorizationserver.dto.UserRegisterDto
 import com.github.diogocerqueiralima.authorizationserver.services.UserService
 import org.springframework.stereotype.Controller
@@ -39,6 +40,22 @@ class AuthenticationController(
         )
 
         return "redirect:/auth/login"
+    }
+
+    @GetMapping("/forgot")
+    fun forgot(model: Model): String {
+
+        model.addAttribute("dto", UserForgotPasswordDto())
+
+        return "forgot"
+    }
+
+    @PostMapping("/forgot")
+    fun forgot(@ModelAttribute dto: UserForgotPasswordDto): String {
+
+        userService.forgot(dto.usernameOrEmail)
+
+        return "redirect:/auth/forgot?success"
     }
 
 }

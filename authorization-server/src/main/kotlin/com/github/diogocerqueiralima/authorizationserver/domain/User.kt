@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.UUID
 
 @Entity
 @Table(name = "users")
@@ -22,7 +23,10 @@ data class User(
     val password: String,
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private val scopes: List<Scope> = emptyList()
+    private val scopes: List<Scope> = emptyList(),
+
+    @Column(unique = true)
+    val token: UUID? = null
 
 ) : UserDetails {
 

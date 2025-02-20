@@ -2,6 +2,7 @@ package com.github.diogocerqueiralima.authorizationserver.services
 
 import com.github.diogocerqueiralima.authorizationserver.domain.User
 import com.github.diogocerqueiralima.authorizationserver.exceptions.*
+import com.github.diogocerqueiralima.authorizationserver.producers.UserProducer
 import com.github.diogocerqueiralima.authorizationserver.repositories.UserRepository
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -13,6 +14,7 @@ import java.util.regex.Pattern
 class UserService(
 
     private val userRepository: UserRepository,
+    private val userProducer: UserProducer,
     private val passwordEncoder: PasswordEncoder
 
 ) : UserDetailsService {
@@ -47,6 +49,13 @@ class UserService(
             )
         )
 
+    }
+
+    fun forgot(usernameOrEmail: String) {
+
+        val user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail) ?: throw UserNotFoundException()
+
+        userProducer.publishEmail(user)
     }
 
 }

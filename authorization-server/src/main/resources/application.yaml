@@ -11,6 +11,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
 client:
   id: ${CLIENT_ID}
@@ -18,3 +23,8 @@ client:
   uri:
     redirect: ${CLIENT_REDIRECT_URI}
     logout: ${CLIENT_LOGOUT_URI}
+
+broker:
+  queue:
+    email:
+      name: ${BROKER_QUEUE_EMAIL_NAME}
