@@ -28,8 +28,8 @@ class UserService(
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"
         val pattern = Pattern.compile(emailRegex)
 
-        if (password.isBlank() || password.trim().length < 8)
-            throw PasswordException()
+        if (password.trim().length < 8)
+            throw PasswordLengthException()
 
         if (password != confirmPassword)
             throw PasswordMatchException()
@@ -56,7 +56,26 @@ class UserService(
 
         val user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail) ?: throw UserNotFoundException()
 
-        userProducer.publishEmail(user.copy(token = UUID.randomUUID()))
+        userProducer.publishEmail(
+            userRepository.save(
+                user.copy(token = UUID.randomUUID())
+            )
+        )
+    }
+
+    fun reset(token: UUID, password: String) {
+
+        if (password.trim().length < 8)
+            throw PasswordLengthException()
+
+        val user = userRepository.findByToken(token) ?: throw UserNotFoundException()
+
+        userRepository.save(
+            user.copy(
+                token = null,
+                password = passwordEncoder.encode(password)
+            )
+        )
     }
 
 }

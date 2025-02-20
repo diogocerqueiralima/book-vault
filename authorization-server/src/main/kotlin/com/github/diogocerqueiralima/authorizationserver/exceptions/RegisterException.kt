@@ -12,7 +12,7 @@ open class RegisterException(
         USER_ALREADY_EXISTS,
         PASSWORD_MATCH,
         INVALID_EMAIL,
-        INVALID_PASSWORD
+        PASSWORD_LENGTH
 
     }
 
@@ -36,8 +36,8 @@ class EmailException(
 
 ) : RegisterException(Code.INVALID_EMAIL, message)
 
-class PasswordException(
+class PasswordLengthException(
 
     message: String = "Invalid password"
 
-) : RegisterException(Code.INVALID_PASSWORD, message)
+) : RegisterException(Code.PASSWORD_LENGTH, message)

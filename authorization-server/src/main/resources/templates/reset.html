@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="../static/css/style.build.tailwind.css" th:href="@{/css/style.build.tailwind.css}">
+</head>
+<body>
+
+    <main class="flex flex-col items-center justify-center w-screen h-screen bg-gray-900">
+
+        <form class="flex flex-col bg-gray-800 p-6 gap-8 rounded-md min-w-1/5" method="post" action="/auth/reset" th:object="${dto}">
+
+            <h1 class="text-amber-50 uppercase text-center text-2xl font-bold">Reset Password</h1>
+
+            <div class="flex flex-col gap-4">
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="hidden" th:field="*{token}"/>
+
+                <div class="flex flex-row items-center gap-2 bg-gray-700 border border-gray-600 transition duration-500 focus-within:ring-2 focus-within:ring-blue-500 rounded-md px-4 py-2">
+
+                    <label class="text-white" for="password">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </label>
+
+                    <input class="text-amber-50 outline-none" type="password" id="password" placeholder="New password" th:field="*{password}">
+                </div>
+
+            </div>
+
+            <button class="bg-blue-500 py-2 rounded-md text-amber-50 uppercase font-bold cursor-pointer transition duration-500 hover:opacity-75" type="submit">Continue</button>
+
+        </form>
+
+    </main>
+
+</body>
+</html>
