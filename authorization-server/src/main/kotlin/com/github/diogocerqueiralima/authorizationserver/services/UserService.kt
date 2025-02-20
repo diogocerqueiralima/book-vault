@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 import java.util.regex.Pattern
 
 @Service
@@ -55,7 +56,7 @@ class UserService(
 
         val user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail) ?: throw UserNotFoundException()
 
-        userProducer.publishEmail(user)
+        userProducer.publishEmail(user.copy(token = UUID.randomUUID()))
     }
 
 }
