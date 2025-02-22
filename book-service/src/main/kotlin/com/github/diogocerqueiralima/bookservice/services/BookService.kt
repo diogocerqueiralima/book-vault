@@ -2,6 +2,7 @@ package com.github.diogocerqueiralima.bookservice.services
 
 import com.github.diogocerqueiralima.bookservice.domain.Book
 import com.github.diogocerqueiralima.bookservice.domain.BookPage
+import com.github.diogocerqueiralima.bookservice.exceptions.BookFormatException
 import com.github.diogocerqueiralima.bookservice.exceptions.BookNotFoundException
 import com.github.diogocerqueiralima.bookservice.exceptions.BookPageException
 import com.github.diogocerqueiralima.bookservice.repositories.BookRepository
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
@@ -29,6 +31,15 @@ class BookService(
         bookRepository.findById(id).orElseThrow { BookNotFoundException() }
 
     fun create(title: String, isbn: String, file: MultipartFile): Book {
+
+        try {
+            PDDocument.load(file.inputStream)
+        }catch (e: IOException) {
+            throw BookFormatException()
+        }
+
+        if (file.name.endsWith(".pdf"))
+            throw BookFormatException()
 
         val book = bookRepository.save(
             Book(
