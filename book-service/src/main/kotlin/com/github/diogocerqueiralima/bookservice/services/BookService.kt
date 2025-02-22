@@ -1,11 +1,15 @@
 package com.github.diogocerqueiralima.bookservice.services
 
 import com.github.diogocerqueiralima.bookservice.domain.Book
+import com.github.diogocerqueiralima.bookservice.domain.BookPage
 import com.github.diogocerqueiralima.bookservice.exceptions.BookNotFoundException
+import com.github.diogocerqueiralima.bookservice.exceptions.BookPageException
 import com.github.diogocerqueiralima.bookservice.repositories.BookRepository
+import org.apache.pdfbox.pdmodel.PDDocument
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectory
@@ -20,6 +24,9 @@ class BookService(
     private val uploadDir: String
 
 ) {
+
+    fun getById(id: Long): Book =
+        bookRepository.findById(id).orElseThrow { BookNotFoundException() }
 
     fun create(title: String, isbn: String, file: MultipartFile): Book {
 
@@ -42,11 +49,48 @@ class BookService(
 
     fun getPdf(id: Long): File {
 
-        val book = bookRepository.findById(id).orElseThrow { BookNotFoundException() }
+        val book = getById(id)
         val path = Path(uploadDir + File.separator)
         val file = File(path.toFile(), book.fileName)
 
         return file
+    }
+
+    fun getPdfPage(id: Long, page: Int): BookPage {
+
+        if (page < 1)
+            throw BookPageException()
+
+        val book = getById(id)
+        val path = Path(uploadDir + File.separator)
+        val file = File(path.toFile(), book.fileName)
+
+        PDDocument.load(file).use { originalDocument ->
+
+            PDDocument().use { document ->
+
+                if (originalDocument.numberOfPages < page)
+                    throw BookPageException()
+
+                val selectedPage = originalDocument.getPage(page - 1)
+
+                document.addPage(selectedPage)
+
+                ByteArrayOutputStream().use { outputStream ->
+
+                    document.save(outputStream)
+
+                    return BookPage(
+                        name = "${book.isbn}-page-$page.pdf",
+                        bytes = outputStream.toByteArray()
+                    )
+
+                }
+
+            }
+
+        }
+
     }
 
 }
