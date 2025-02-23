@@ -22,5 +22,6 @@ spring:
       max-request-size: 10MB
       max-file-size: 10MB
 
-book:
-  dir: ${BOOK_DIR}
+dir:
+  book: ${BOOK_DIR}
+  author: ${AUTHOR_DIR}

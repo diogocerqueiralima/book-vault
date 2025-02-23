@@ -57,6 +57,7 @@ services:
       - .env
     volumes:
       - ${BOOK_DIR}:${BOOK_DIR}
+      - ${AUTHOR_DIR}:${AUTHOR_DIR}
 
 networks:
   network:

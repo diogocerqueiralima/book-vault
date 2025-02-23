@@ -12,6 +12,9 @@ data class Book(
 
     val title: String,
 
+    @ManyToMany(mappedBy = "books")
+    val authors: List<Author> = emptyList(),
+
     @Column(unique = true)
     val isbn: String
 

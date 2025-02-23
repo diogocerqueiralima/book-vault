@@ -22,7 +22,7 @@ class BookService(
 
     private val bookRepository: BookRepository,
 
-    @Value("\${book.dir}")
+    @Value("\${dir.book}")
     private val uploadDir: String
 
 ) {
@@ -37,9 +37,6 @@ class BookService(
         }catch (e: IOException) {
             throw BookFormatException()
         }
-
-        if (file.name.endsWith(".pdf"))
-            throw BookFormatException()
 
         val book = bookRepository.save(
             Book(
